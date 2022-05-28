@@ -103,23 +103,5 @@ public class ArgsTest {
     }
 
 
-    @Test
-    public void test() {
-
-        DateTime startDateTime = DateUtil.beginOfDay(DateUtil.yesterday());
-        int intervalHour = 1;
-        ArrayList<String> times = new ArrayList<>();
-
-        DateTime temp = startDateTime;
-        for (int i = 0; i < 24; i++) {
-            DateTime newDateTime = DateUtil.offsetHour(temp, intervalHour);
-            times.add(newDateTime.toString());
-            temp = newDateTime;
-        }
-
-        System.out.println(times);
-
-
-    }
 
 }
