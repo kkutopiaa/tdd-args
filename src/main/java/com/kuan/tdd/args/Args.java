@@ -6,6 +6,7 @@ import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author qinxuekuan
@@ -30,8 +31,8 @@ public class Args {
 
     static Map<Class<?>, OptionParser> parsers = Map.of(
             boolean.class, new BooleanParser(),
-            int.class, new IntegerParser(),
-            String.class, new StringParser()
+            int.class, new SingleValuedOptionParser<>(Integer::valueOf),
+            String.class, new SingleValuedOptionParser<>(Function.identity())
     );
 
     static OptionParser getParser(Class<?> parameterType) {
@@ -45,41 +46,6 @@ public class Args {
         return getParser(parameterType).parseOption(arguments, option);
 
     }
-
-    interface OptionParser {
-        Object parseOption(List<String> arguments, Option option);
-    }
-
-    static class StringParser implements OptionParser {
-
-        @Override
-        public Object parseOption(List<String> arguments, Option option) {
-            String optionValue = "-" + option.value();
-            int index = arguments.indexOf(optionValue);
-            return arguments.get(index + 1);
-
-        }
-    }
-
-    static class IntegerParser implements OptionParser {
-
-        @Override
-        public Object parseOption(List<String> arguments, Option option) {
-            String optionValue = "-" + option.value();
-            int index = arguments.indexOf(optionValue);
-            return Integer.valueOf(arguments.get(index + 1));
-        }
-    }
-
-
-    static class BooleanParser implements OptionParser {
-        @Override
-        public Object parseOption(List<String> arguments, Option option) {
-            String optionValue = "-" + option.value();
-            return arguments.contains(optionValue);
-        }
-    }
-
 
 
 }
