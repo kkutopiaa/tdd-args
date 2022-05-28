@@ -82,13 +82,7 @@ public class ArgsTest {
 
 
 
-//    SingleValuedOptionParserTest：
-//    sad path:
-//        Integer -p / -p 8080 8081
-//        String  -d / -d /usr/logs /usr/vars
-//    default value:
-//        Integer 0
-//        String ""
+
 
 
     //    Mult Options:   -l -p 8080 -d /usr/logs

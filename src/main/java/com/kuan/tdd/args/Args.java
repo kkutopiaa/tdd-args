@@ -1,5 +1,6 @@
 package com.kuan.tdd.args;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
@@ -31,9 +32,10 @@ public class Args {
 
     static Map<Class<?>, OptionParser<?>> parsers = Map.of(
             boolean.class, new BooleanOptionParser(),
-            int.class, new SingleValuedOptionParser<>(Integer::valueOf),
-            String.class, new SingleValuedOptionParser<>(Function.identity())
+            int.class, new SingleValuedOptionParser<>(0, Integer::valueOf),
+            String.class, new SingleValuedOptionParser<>("", String::valueOf)
     );
+
 
     static OptionParser<?> getParser(Class<?> parameterType) {
         return parsers.get(parameterType);
