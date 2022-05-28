@@ -6,7 +6,7 @@ import java.util.List;
  * @author qinxuekuan
  * @date 2022/5/27
  */
-interface OptionParser {
+interface OptionParser<T> {
     /**
      * 解析命令行参数的主要接口
      *
@@ -14,5 +14,5 @@ interface OptionParser {
      * @param option    解析参数选项需要用到的类
      * @return 解析之后的对象
      */
-    Object parseOption(List<String> arguments, Option option);
+    T parse(List<String> arguments, Option option);
 }

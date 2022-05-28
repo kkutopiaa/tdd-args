@@ -29,13 +29,13 @@ public class Args {
         }
     }
 
-    static Map<Class<?>, OptionParser> parsers = Map.of(
-            boolean.class, new BooleanParser(),
+    static Map<Class<?>, OptionParser<?>> parsers = Map.of(
+            boolean.class, new BooleanOptionParser(),
             int.class, new SingleValuedOptionParser<>(Integer::valueOf),
             String.class, new SingleValuedOptionParser<>(Function.identity())
     );
 
-    static OptionParser getParser(Class<?> parameterType) {
+    static OptionParser<?> getParser(Class<?> parameterType) {
         return parsers.get(parameterType);
     }
 
@@ -43,7 +43,7 @@ public class Args {
         Class<?> parameterType = parameter.getType();
         Option option = parameter.getAnnotation(Option.class);
 
-        return getParser(parameterType).parseOption(arguments, option);
+        return getParser(parameterType).parse(arguments, option);
 
     }
 

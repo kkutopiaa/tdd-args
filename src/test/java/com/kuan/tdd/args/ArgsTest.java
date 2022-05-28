@@ -79,12 +79,14 @@ public class ArgsTest {
     }
 
 
+
+
+
+//    SingleValuedOptionParserTest：
 //    sad path:
-//        Boolean -l t  /  -l t f
 //        Integer -p / -p 8080 8081
 //        String  -d / -d /usr/logs /usr/vars
 //    default value:
-//        Boolean false
 //        Integer 0
 //        String ""
 

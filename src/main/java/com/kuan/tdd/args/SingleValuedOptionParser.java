@@ -7,7 +7,7 @@ import java.util.function.Function;
  * @author qinxuekuan
  * @date 2022/5/27
  */
-class SingleValuedOptionParser<T> implements OptionParser {
+class SingleValuedOptionParser<T> implements OptionParser<T> {
 
     Function<String, T> valueParser;
 
@@ -16,7 +16,7 @@ class SingleValuedOptionParser<T> implements OptionParser {
     }
 
     @Override
-    public T parseOption(List<String> arguments, Option option) {
+    public T parse(List<String> arguments, Option option) {
         String optionValue = "-" + option.value();
         int index = arguments.indexOf(optionValue);
         String value = arguments.get(index + 1);
