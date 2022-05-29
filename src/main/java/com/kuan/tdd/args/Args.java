@@ -25,10 +25,24 @@ public class Args {
 
         try {
             return (T) constructor.newInstance(values);
+        } catch (IllegalOptionException e) {
+            throw e;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private static Object parseOption(List<String> arguments, Parameter parameter) {
+        if (!parameter.isAnnotationPresent(Option.class)) {
+            throw new IllegalOptionException(parameter.getName());
+        }
+
+        Class<?> parameterType = parameter.getType();
+        Option option = parameter.getAnnotation(Option.class);
+
+        return getParser(parameterType).parse(arguments, option);
+    }
+
 
     static Map<Class<?>, OptionParser<?>> parsers = Map.of(
             boolean.class, new BooleanOptionParser(),
@@ -39,14 +53,6 @@ public class Args {
 
     static OptionParser<?> getParser(Class<?> parameterType) {
         return parsers.get(parameterType);
-    }
-
-    private static Object parseOption(List<String> arguments, Parameter parameter) {
-        Class<?> parameterType = parameter.getType();
-        Option option = parameter.getAnnotation(Option.class);
-
-        return getParser(parameterType).parse(arguments, option);
-
     }
 
 

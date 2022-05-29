@@ -6,7 +6,7 @@ package com.kuan.tdd.args;
  */
 public class TooManyArgumentsException extends RuntimeException {
 
-    String value;
+    private final String value;
 
     public TooManyArgumentsException(String value) {
         this.value = value;

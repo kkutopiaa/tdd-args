@@ -38,6 +38,18 @@ public class ArgsTest {
     }
 
 
+    @Test
+    public void should_throw_illegal_option_exception_if_annotation_not_present() {
+        IllegalOptionException e = assertThrows(IllegalOptionException.class,
+                () -> Args.parse(OptionWithoutAnnotation.class, "-l", "-p", "8080", "-d", "/usr/logs"));
+        assertEquals("port", e.getParameter());
+    }
+
+
+    record OptionWithoutAnnotation(@Option("l") boolean logging,
+                        int port,
+                        @Option("d") String directory) {
+    }
 
 
 

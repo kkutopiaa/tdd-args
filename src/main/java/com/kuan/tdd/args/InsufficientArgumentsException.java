@@ -6,7 +6,7 @@ package com.kuan.tdd.args;
  */
 public class InsufficientArgumentsException extends RuntimeException {
 
-    String value;
+    private final String value;
 
     public InsufficientArgumentsException(String value) {
         this.value = value;
