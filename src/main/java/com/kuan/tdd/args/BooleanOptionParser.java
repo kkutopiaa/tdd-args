@@ -4,6 +4,8 @@ import com.kuan.tdd.args.exceptions.TooManyArgumentsException;
 
 import java.util.List;
 
+import static com.kuan.tdd.args.SingleValuedOptionParser.values;
+
 /**
  * @author qinxuekuan
  * @date 2022/5/27
@@ -11,12 +13,8 @@ import java.util.List;
 class BooleanOptionParser implements OptionParser<Boolean> {
     @Override
     public Boolean parse(List<String> arguments, Option option) {
-        String optionValue = "-" + option.value();
-        int index = arguments.indexOf(optionValue);
-        if (index + 1 < arguments.size() && !arguments.get(index + 1).startsWith("-")) {
-            throw new TooManyArgumentsException(option.value());
-        }
-        return index != -1;
+        return values(arguments, option, 0)
+                .isPresent();
     }
 
 }
