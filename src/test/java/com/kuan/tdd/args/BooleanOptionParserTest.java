@@ -8,8 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author qinxuekuan
@@ -24,6 +23,13 @@ public class BooleanOptionParserTest {
 //        Boolean false
 
 
+    // happy path
+    @Test
+    public void should_get_true_if_option_present() {
+        assertTrue(new BooleanOptionParser().parse(List.of("-l"), option("l")));
+    }
+
+    // sad path
     @Test
     public void should_not_accept_extra_argument_for_boolean_option() {
         TooManyArgumentsException e = assertThrows(TooManyArgumentsException.class,
@@ -31,7 +37,7 @@ public class BooleanOptionParserTest {
         Assertions.assertEquals("l", e.getOption());
     }
 
-
+    // default value
     @Test
     public void should_get_default_value_to_false_if_option_not_present() {
         assertFalse(new BooleanOptionParser().parse(List.of(), option("l")));
