@@ -1,4 +1,4 @@
-package com.kuan.tdd.args;
+package com.kuan.tdd.args.exceptions;
 
 /**
  * @author qinxuekuan
