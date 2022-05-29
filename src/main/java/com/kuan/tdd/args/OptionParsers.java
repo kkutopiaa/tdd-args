@@ -12,20 +12,14 @@ import java.util.stream.IntStream;
  * @author qinxuekuan
  * @date 2022/5/27
  */
-class SingleValuedOptionParser<T> implements OptionParser<T> {
+class OptionParsers {
 
-    T defaultValue;
-
-    Function<String, T> valueParser;
-
-    public SingleValuedOptionParser(T defaultValue, Function<String, T> valueParser) {
-        this.defaultValue = defaultValue;
-        this.valueParser = valueParser;
+    public static OptionParser<Boolean> bool() {
+        return ((arguments, option) -> values(arguments, option, 0).isPresent());
     }
 
-    @Override
-    public T parse(List<String> arguments, Option option) {
-        return values(arguments, option, 1)
+    public static <T> OptionParser<T> unary(T defaultValue, Function<String, T> valueParser) {
+        return (arguments, option) -> values(arguments, option, 1)
                 .map(it -> valueParser.apply(it.get(0)))
                 .orElse(defaultValue);
     }
