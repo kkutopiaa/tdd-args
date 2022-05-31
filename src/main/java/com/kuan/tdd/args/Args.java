@@ -17,12 +17,12 @@ public class Args {
 
     public static <T> T parse(Class<T> optionsClass, String... args) {
 
+
         List<String> arguments = Arrays.asList(args);
         Constructor<?> constructor = optionsClass.getDeclaredConstructors()[0];
 
         Object[] values = Arrays.stream(constructor.getParameters())
-                                    .map(it -> parseOption(arguments, it)).toArray();
-
+                .map(it -> parseOption(arguments, it)).toArray();
         try {
             return (T) constructor.newInstance(values);
         } catch (IllegalOptionException e) {
@@ -43,17 +43,16 @@ public class Args {
         return getParser(parameterType).parse(arguments, option);
     }
 
-
-    static Map<Class<?>, OptionParser<?>> parsers = Map.of(
-            boolean.class, OptionParsers.bool(),
-            int.class, OptionParsers.unary(0, Integer::valueOf),
-            String.class, OptionParsers.unary("", String::valueOf)
-    );
-
-
     static OptionParser<?> getParser(Class<?> parameterType) {
         return parsers.get(parameterType);
     }
 
+    static Map<Class<?>, OptionParser<?>> parsers = Map.of(
+            boolean.class, OptionParsers.bool(),
+            int.class, OptionParsers.unary(0, Integer::valueOf),
+            String.class, OptionParsers.unary("", String::valueOf),
+            String[].class, OptionParsers.list(String[]::new, String::valueOf),
+            Integer[].class, OptionParsers.list(Integer[]::new, Integer::valueOf)
+    );
 
 }
